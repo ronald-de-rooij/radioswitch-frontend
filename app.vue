@@ -1,4 +1,11 @@
 <template>
+  <DataTable :value="products" table-style="min-width: 50rem">
+    <Column field="code" header="Code" />
+    <Column field="name" header="Name" />
+    <Column field="category" header="Category" />
+    <Column field="quantity" header="Quantity" />
+  </DataTable>
+
   <div class="w-full h-screen text-center py-8 bg-zinc-950">
     <h1
       class="bg-gradient-to-r from-teal-400 to-yellow-200 inline-block text-transparent bg-clip-text text-6xl font-bold"
@@ -33,15 +40,63 @@
       </div>
     </div>
   </div>
+  <Button>Test</Button>
 </template>
 
 <script setup lang="ts">
+  const products = [
+    {
+      code: "Code",
+      name: "name",
+      category: "category",
+      quantity: "quantity",
+    },
+    {
+      code: "Code",
+      name: "name",
+      category: "category",
+      quantity: "quantity",
+    },
+  ]
+
   import type { Response, Stream, StreamResponse } from "~/models"
   const { customFetch } = useCustomFetch()
 
   const streams = ref<Stream[]>([])
 
   onMounted(async () => {
+    const { data: Login } = await customFetch("/session/login", {
+      "content-type": "application/json",
+      method: "post",
+      body: {
+        email: "mario@bros.com",
+        password: "testtest",
+      },
+    })
+    console.log(Login)
+
+    console.log(Login?.value.access_token)
+
+    const { data: singleStream } = await customFetch(
+      "/streams/9b2813c7-6f5d-4af4-bd7a-23a64a7b9d87",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${Login?.value.access_token}`,
+          Accept: "application/json",
+        },
+      },
+    )
+    console.log(singleStream)
+    const { data: user } = await customFetch("/user", {
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${Login?.value.access_token}`,
+      },
+    })
+
+    console.log("User", user)
+
     const { data } = await customFetch("/streams")
     const response = data as Response
 

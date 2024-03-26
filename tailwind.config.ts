@@ -25,4 +25,5 @@ export default {
     "error.{js,ts,vue}",
     "content/**/*.md",
   ],
+  safelist: ["p-2", "text-sm"],
 }
