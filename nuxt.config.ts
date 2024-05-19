@@ -1,20 +1,26 @@
-import primevueConfig from "./primevue.config"
-
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "nuxt-primevue"],
-  primevue: primevueConfig,
-  css: ["primevue/resources/themes/lara-dark-teal/theme.css"],
+  modules: ['@nuxtjs/google-fonts', '@nuxtjs/tailwindcss', 'nuxt-primevue'],
   runtimeConfig: {
     public: {
-      baseUrl: process.env.BASE_URL,
+      BASE_URL: process.env.BASE_URL,
     },
+  },
+  primevue: {
+    options: {
+      ripple: true,
+      unstyled: true,
+      ptOptions: {
+        mergeProps: true,
+      },
+    },
+    importPT: { as: 'Lara', from: '~/presets/lara' },
   },
   ssr: false,
   tailwindcss: {
     exposeConfig: false,
-    cssPath: ["~/assets/css/tailwind.scss", { injectPosition: 0 }],
-    configPath: "tailwind.config",
+    cssPath: ['~/assets/css/tailwind.scss', { injectPosition: 0 }],
+    configPath: 'tailwind.config',
     viewer: true,
   },
 })

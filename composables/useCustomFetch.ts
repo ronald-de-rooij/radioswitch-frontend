@@ -1,12 +1,12 @@
-import type { UseFetchOptions } from "#app"
-import { defu } from "defu"
+import { defu } from 'defu'
+import type { UseFetchOptions } from '#app'
 
 export default function useCustomFetch() {
   function customFetch<T>(
     url: string | (() => string),
     options: UseFetchOptions<T> = {},
   ) {
-    const userAuth = useCookie("token")
+    const userAuth = useCookie('token')
     const config = useRuntimeConfig()
 
     const defaults: UseFetchOptions<T> = {
