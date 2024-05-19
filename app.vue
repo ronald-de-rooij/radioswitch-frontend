@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Response, Stream, StreamResponse } from '~/models'
+import type { Stream, StreamResponse } from '~/models'
 
 const { apiFetch } = useAPI()
 

@@ -1,6 +1,11 @@
 import antfu from '@antfu/eslint-config'
 
-export default antfu({
-  formatters: true,
-  rules: { 'n/prefer-global/process': 0 },
-})
+export default antfu(
+  {
+    formatters: true,
+    rules: { 'n/prefer-global/process': 0 },
+  },
+  {
+    ignores: ['presets'],
+  },
+)
