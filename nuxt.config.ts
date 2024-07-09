@@ -1,6 +1,9 @@
+import path from 'node:path'
+
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ['@nuxtjs/google-fonts', '@nuxtjs/tailwindcss', 'nuxt-primevue'],
+  ssr: false,
+  modules: ['@nuxtjs/google-fonts', '@nuxtjs/tailwindcss', '@vueuse/nuxt', 'nuxt-primevue'],
   runtimeConfig: {
     public: {
       BASE_URL: process.env.BASE_URL,
@@ -14,9 +17,8 @@ export default defineNuxtConfig({
         mergeProps: true,
       },
     },
-    importPT: { as: 'Lara', from: '~/presets/lara' },
+    importPT: { from: path.resolve(__dirname, './presets/lara/') },
   },
-  ssr: false,
   tailwindcss: {
     exposeConfig: false,
     cssPath: ['~/assets/css/tailwind.scss', { injectPosition: 0 }],

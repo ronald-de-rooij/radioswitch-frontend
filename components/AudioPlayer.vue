@@ -19,7 +19,7 @@ watch(
 </script>
 
 <template>
-  <div class="w-72 mx-auto pt-8">
+  <div class="w-72 mx-auto">
     <audio ref="audioRef" controls class="w-full" :src="streamUrl">
       Your browser does not support the audio tag.
     </audio>

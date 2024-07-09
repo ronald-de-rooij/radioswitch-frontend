@@ -4,21 +4,21 @@ export default {
     extend: {
       colors: {
         primary: {
-          'DEFAULT': '#10B981',
+          'DEFAULT': '#0ea5e9',
           'inverse': '#FFFFFF',
-          'hover': '#0C8B6D',
-          'active-color': '#0C8B6D',
-          '50': '#8CF5D2',
-          '100': '#79F3CB',
-          '200': '#53F0BC',
-          '300': '#2EEDAE',
-          '400': '#13DF9B',
-          '500': '#10B981',
-          '600': '#0C855D',
-          '700': '#075239',
-          '800': '#031E15',
-          '900': '#000000',
-          '950': '#000000',
+          'hover': '#0284c7',
+          'active-color': '#38bdf8',
+          '50': '#f0f9ff',
+          '100': '#e0f2fe',
+          '200': '#bae6fd',
+          '300': '#7dd3fc',
+          '400': '#38bdf8',
+          '500': '#0ea5e9',
+          '600': '#0284c7',
+          '700': '#0369a1',
+          '800': '#075985',
+          '900': '#0c4a6e',
+          '950': '#082f49',
         },
         surface: {
           DEFAULT: '#52525B',
@@ -59,6 +59,7 @@ export default {
     'Error.{js,ts,vue}',
     'error.{js,ts,vue}',
     'content/**/*.md',
+    'presets/**/*.{js,vue,ts}', // for PrimeVue
   ],
   safelist: ['p-2', 'text-sm'],
 }
