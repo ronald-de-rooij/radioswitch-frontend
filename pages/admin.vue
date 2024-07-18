@@ -1,53 +1,53 @@
 <script lang="ts" setup>
+import type { Stream, StreamResponse } from '~/models'
+
+const { apiFetch } = useAPI()
+const config = useRuntimeConfig()
+
 definePageMeta({
   layout: 'admin',
 })
 
-const { apiFetch } = useAPI()
-const title = ref('')
-const imageUrl = ref('')
-const streamUrl = ref('')
-const userId = ref('')
-const config = useRuntimeConfig()
+const streams = ref<Stream[]>([])
+onMounted(() => {
+  getStreams()
+})
 
-function createStream() {
-  apiFetch(`${config.public.BASE_URL}/streams`, {
-    method: 'POST',
-    body: JSON.stringify({
-      title: title.value,
-      image_url: imageUrl.value,
-      stream_url: streamUrl.value,
-    }),
-  })
+async function getStreams() {
+  const response: StreamResponse = await apiFetch(`${config.public.BASE_URL}/streams`)
+
+  streams.value = response.data
+}
+
+const dialogVisible = ref(false)
+const selectedStream = ref<Stream | null>(null)
+function editStream(stream: Stream): void {
+  dialogVisible.value = true
+  selectedStream.value = stream
+}
+
+function updatedStream() {
+  dialogVisible.value = false
+  getStreams()
 }
 </script>
 
 <template>
-  <div>
-    <form @submit.prevent="createStream">
-      <div class="grid grid-cols-2 gap-4">
-        <div class="flex flex-col gap-2">
-          <label for="title">Title</label>
-          <InputText id="title" v-model="title" type="text" aria-describedby="stream-title" />
-        </div>
-        <div class="flex flex-col gap-2">
-          <label for="image-url">Image URL</label>
-          <InputText id="image-url" v-model="imageUrl" type="text" />
-        </div>
-        <div class="flex flex-col gap-2">
-          <label for="stream-url">Stream URL</label>
-          <InputText id="stream-url" v-model="streamUrl" type="text" />
-        </div>
-        <div v-if="streamUrl" class="flex items-end">
-          <AudioPlayer :stream-url="streamUrl" />
-        </div>
-      </div>
+  <DataTable :value="streams" table-style="min-width: 50rem">
+    <Column field="title" header="Title" sortable />
+    <Column field="stream_url" header="Stream">
+      <template #body="{ data: { stream_url } }">
+        <AudioPlayer :stream-url="stream_url" />
+      </template>
+    </Column>
+    <Column field="action" header="">
+      <template #body="{ data }">
+        <i class="pi pi-pencil float-right hover:text-primary-500 hover:cursor-pointer" @click="editStream(data)" />
+      </template>
+    </Column>
+  </DataTable>
 
-      <div class="flex justify-center mt-8">
-        <Button type="submit">
-          Create Stream
-        </Button>
-      </div>
-    </form>
-  </div>
+  <Dialog v-model:visible="dialogVisible" modal header="Edit Stream">
+    <EditStream :stream="selectedStream" @update="updatedStream" />
+  </Dialog>
 </template>

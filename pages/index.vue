@@ -36,7 +36,7 @@ function randomStation() {
       RadioSwitch
     </h1>
 
-    <AudioPlayer :stream-url="activeStream?.stream_url" />
+    <AudioPlayer :stream-url="activeStream?.stream_url" auto-play />
 
     <h2 class="text-3xl font-bold my-8 text-white">
       <template v-if="activeStream">

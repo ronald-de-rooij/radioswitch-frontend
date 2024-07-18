@@ -35,8 +35,8 @@ const userNavigation = [
 </script>
 
 <template>
-  <div class="h-full bg-gray-100">
-    <div class="min-h-full">
+  <div class="h-full ">
+    <div class="min-h-full bg-gray-100">
       <div class="bg-surface-ground pb-32">
         <Disclosure v-slot="{ open }" as="nav" class="border-b border-sky-400 border-opacity-25 bg-surface-ground lg:border-none">
           <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
@@ -141,7 +141,7 @@ const userNavigation = [
         <header class="py-10">
           <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h1 class="text-3xl font-bold tracking-tight text-white">
-              Dashboard
+              Streams
             </h1>
           </div>
         </header>

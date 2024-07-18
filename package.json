@@ -18,7 +18,7 @@
     "@vueuse/nuxt": "^10.11.0",
     "defu": "^6.1.4",
     "nuxt": "^3.11.2",
-    "primeicons": "latest",
+    "primeicons": "^6.0.1",
     "primevue": "^3.52.0",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"

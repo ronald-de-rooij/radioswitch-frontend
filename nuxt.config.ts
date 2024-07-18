@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     },
     importPT: { from: path.resolve(__dirname, './presets/lara/') },
   },
+  css: ['primeicons/primeicons.css'],
   tailwindcss: {
     exposeConfig: false,
     cssPath: ['~/assets/css/tailwind.scss', { injectPosition: 0 }],
