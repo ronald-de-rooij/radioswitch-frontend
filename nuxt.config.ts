@@ -3,6 +3,7 @@ import path from 'node:path'
 export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
+  components: [{ path: '~/components', pathPrefix: false }],
   modules: ['@nuxtjs/google-fonts', '@nuxtjs/tailwindcss', '@vueuse/nuxt', 'nuxt-primevue'],
   runtimeConfig: {
     public: {

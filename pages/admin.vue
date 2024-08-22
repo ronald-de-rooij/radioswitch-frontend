@@ -1,8 +1,12 @@
 <script lang="ts" setup>
+import { useToast } from 'primevue/usetoast'
 import type { Stream, StreamResponse } from '~/models'
 
-const { apiFetch } = useAPI()
+const { apiClient } = useApiClient()
+const apiStream = useApiStream()
 const config = useRuntimeConfig()
+
+const confirm = useConfirm()
 
 definePageMeta({
   layout: 'admin',
@@ -13,8 +17,10 @@ onMounted(() => {
   getStreams()
 })
 
+const showCreateDialog = ref(false)
+
 async function getStreams() {
-  const response: StreamResponse = await apiFetch(`${config.public.BASE_URL}/streams`)
+  const response: StreamResponse = await apiClient(`${config.public.BASE_URL}/streams`)
 
   streams.value = response.data
 }
@@ -30,24 +36,76 @@ function updatedStream() {
   dialogVisible.value = false
   getStreams()
 }
+
+const toast = useToast()
+
+async function deleteStream(event: any, stream: Stream): Promise<void> {
+  confirm.require({
+    target: event.currentTarget,
+    message: `Are you sure you want to delete ${stream.title}?`,
+    icon: 'pi pi-exclamation-triangle',
+    rejectClass: 'bg-red-500 border-red-500 hover:bg-red-600 hover:border-red-600',
+    acceptClass: '',
+    rejectLabel: 'Cancel',
+    acceptLabel: 'Delete',
+    accept: async () => {
+      const result = await apiStream.deleteStream(stream.id)
+
+      if (result.success) {
+        toast.add({
+          severity: 'success',
+          summary: 'Success',
+          detail: `${stream.title} has been deleted`,
+        })
+
+        await getStreams()
+      }
+    },
+  })
+}
 </script>
 
 <template>
-  <DataTable :value="streams" table-style="min-width: 50rem">
-    <Column field="title" header="Title" sortable />
-    <Column field="stream_url" header="Stream">
-      <template #body="{ data: { stream_url } }">
-        <AudioPlayer :stream-url="stream_url" />
-      </template>
-    </Column>
-    <Column field="action" header="">
-      <template #body="{ data }">
-        <i class="pi pi-pencil float-right hover:text-primary-500 hover:cursor-pointer" @click="editStream(data)" />
-      </template>
-    </Column>
-  </DataTable>
+  <header class="py-10">
+    <div class="flex justify-between mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold tracking-tight text-white">
+        Streams
+      </h1>
 
-  <Dialog v-model:visible="dialogVisible" modal header="Edit Stream">
-    <EditStream :stream="selectedStream" @update="updatedStream" />
-  </Dialog>
+      <Button @click="showCreateDialog = true">
+        Create Stream
+      </Button>
+    </div>
+  </header>
+
+  <CreateStream v-model:visible="showCreateDialog" />
+
+  <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+    <div class="rounded-lg bg-white px-5 py-6 shadow sm:px-6">
+      <Toast position="top-right" />
+
+      <DataTable :value="streams" table-style="min-width: 50rem">
+        <Column field="title" header="Title" sortable />
+        <Column field="streamUrl" header="Stream">
+          <template #body="{ data: { streamUrl } }">
+            <AudioPlayer :stream-url="streamUrl" />
+          </template>
+        </Column>
+        <Column field="action">
+          <template #body="{ data }">
+            <div class="flex justify-end flex-end gap-4">
+              <i class="pi pi-pencil hover:text-primary-500 hover:cursor-pointer" @click="editStream(data)" />
+              <i class="pi pi-trash hover:text-primary-500 hover:cursor-pointer" @click="deleteStream($event, data)" />
+            </div>
+          </template>
+        </Column>
+      </DataTable>
+
+      <ConfirmPopup />
+
+      <Dialog v-model:visible="dialogVisible" modal header="Edit Stream">
+        <EditStream :stream="selectedStream" @update="updatedStream" />
+      </Dialog>
+    </div>
+  </div>
 </template>

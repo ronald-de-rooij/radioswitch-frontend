@@ -1,10 +1,18 @@
 export interface Stream {
   description: string
   id: string
-  image_url: string
-  stream_url: string
+  imageUrl: string
+  streamUrl: string
   title: string
 }
+
+export interface StreamCreate {
+  description?: string
+  imageUrl?: string
+  streamUrl: string
+  title: string
+}
+
 export interface StreamResponse {
   data: Stream[]
 }

@@ -6,7 +6,7 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(['update'])
-const { apiFetch } = useAPI()
+const { apiClient } = useApiClient()
 const title = ref('')
 const imageUrl = ref('')
 const streamUrl = ref('')
@@ -15,19 +15,19 @@ const config = useRuntimeConfig()
 onMounted(() => {
   if (props.stream) {
     title.value = props.stream.title
-    imageUrl.value = props.stream.image_url
-    streamUrl.value = props.stream.stream_url
+    imageUrl.value = props.stream.imageUrl
+    streamUrl.value = props.stream.streamUrl
   }
 })
 
 async function updateStream() {
   try {
-    await apiFetch(`${config.public.BASE_URL}/streams/${props.stream?.id}`, {
+    await apiClient(`${config.public.BASE_URL}/streams/${props.stream?.id}`, {
       method: 'PUT',
       body: JSON.stringify({
         title: title.value,
-        image_url: imageUrl.value,
-        stream_url: streamUrl.value,
+        imageUrl: imageUrl.value,
+        streamUrl: streamUrl.value,
       }),
     })
 

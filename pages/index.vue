@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import type { Stream, StreamResponse } from '~/models'
 
-const { apiFetch } = useAPI()
+const { apiClient } = useApiClient()
 
 const streams = ref<Stream[]>([])
 
 onMounted(async () => {
   try {
-    const { data } = await apiFetch<StreamResponse>('/streams')
+    const { data } = await apiClient<StreamResponse>('/streams')
 
     streams.value = data
   }
@@ -19,7 +19,7 @@ onMounted(async () => {
 const activeStream = ref<Stream | null>()
 
 function isActiveStream(stream: Stream) {
-  return activeStream.value?.stream_url === stream.stream_url
+  return activeStream.value?.streamUrl === stream.streamUrl
 }
 
 function randomStation() {
@@ -29,45 +29,41 @@ function randomStation() {
 </script>
 
 <template>
-  <div class="w-full h-screen text-center py-8 bg-surface-ground">
-    <h1
-      class="bg-gradient-to-r from-teal-400 to-yellow-200 inline-block text-transparent bg-clip-text text-6xl font-bold mb-8"
-    >
-      RadioSwitch
-    </h1>
+  <div class="w-full h-screen text-center">
+    <AppHeader />
 
-    <AudioPlayer :stream-url="activeStream?.stream_url" auto-play />
+    <div class="flex items-center p-6 bg-sky-500 w-96 mx-auto rounded-full my-8">
+      <AudioPlayer v-if="activeStream" :stream-url="activeStream?.streamUrl" auto-play icons />
+      <h2 class="text-xl font-bold text-white w-full">
+        <template v-if="activeStream">
+          {{ activeStream.title }}
+        </template>
+        <template v-else>
+          Select a stream to start listening
+        </template>
+      </h2>
+    </div>
 
-    <h2 class="text-3xl font-bold my-8 text-white">
-      <template v-if="activeStream">
-        {{ activeStream.title }}
-      </template>
+    <!-- <a href="https://api.radio-switch.nl/auth/google" class="text-white">GOOGLE</a> -->
 
-      <template v-else>
-        Select a stream to listen to
-      </template>
-    </h2>
-
-    <a href="https://api.radio-switch.nl/auth/google" class="text-white">GOOGLE</a>
-
-    <div class="grid grid-cols-4 max-w-6xl mx-auto gap-4">
+    <div class="grid grid-cols-4 max-w-7xl sm:px-4 lg:px-8 mx-auto gap-4">
       <div
         v-for="stream in streams" :key="stream.id"
-        class="max-w-md rounded-lg p-0.5 cursor-pointer animate-border bg-[length:200%_200%] hover:bg-gradient-to-r hover:from-teal-400 hover:to-yellow-200"
+        class="max-w-md rounded-lg p-0.5 cursor-pointer"
         @click="activeStream = stream"
       >
         <div
-          class="bg-surface-card px-4 py-5 rounded-lg animate-background"
-          :class="{ 'bg-gradient-to-r from-teal-400 to-yellow-200': isActiveStream(stream) }"
+          class="bg-surface-card px-4 py-5 rounded-lg border-2 hover:border-sky-400 border-transparent"
+          :class="{ '!border-sky-400': isActiveStream(stream) }"
         >
-          <p class="font-bold" :class="isActiveStream(stream) ? 'text-black' : 'text-white'">
+          <p class="font-bold text-white">
             {{ stream.title }}
           </p>
         </div>
       </div>
     </div>
 
-    <Button class="mt-8 bg-gradient-to-r from-teal-400 to-yellow-200 px-4 py-2 rounded-lg" @click="randomStation">
+    <Button class="mt-8 bg-sky-500 px-4 py-2 rounded-lg" @click="randomStation">
       I'm feeling lucky (random)
     </Button>
   </div>

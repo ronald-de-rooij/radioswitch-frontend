@@ -1,50 +1,55 @@
 <script lang="ts" setup>
-const { apiFetch } = useAPI()
+const apiStream = useApiStream()
+
+const visible = defineModel<boolean>('visible', { required: true })
+
 const title = ref('')
 const imageUrl = ref('')
 const streamUrl = ref('')
-const config = useRuntimeConfig()
+const description = ref('')
 
-function createStream() {
-  apiFetch(`${config.public.BASE_URL}/streams`, {
-    method: 'POST',
-    body: JSON.stringify({
-      title: title.value,
-      image_url: imageUrl.value,
-      stream_url: streamUrl.value,
-    }),
+watch(visible, (value) => {
+  if (value) {
+    title.value = ''
+    imageUrl.value = ''
+    streamUrl.value = ''
+    description.value = ''
+  }
+})
+
+// TODO: Form validation
+function submitForm() {
+  apiStream.createStream({
+    title: title.value,
+    imageUrl: imageUrl.value,
+    streamUrl: streamUrl.value,
+    description: description.value,
   })
 }
 </script>
 
 <template>
-  <form @submit.prevent="createStream">
-    <div class="grid grid-cols-2 gap-4">
-      <div class="flex flex-col gap-2">
-        <label for="title">Title</label>
-        <InputText id="title" v-model="title" type="text" aria-describedby="stream-title" />
+  <Dialog v-model:visible="visible" modal header="Create Stream">
+    <form @submit.prevent="submitForm">
+      <div class="grid grid-cols-2 gap-4">
+        <!-- TODO: Create Input Component -->
+        <CCTextField v-model="title" label="Title" name="title" required />
+        <CCTextField v-model="imageUrl" label="Image URL" name="imageURL" required />
+        <div>
+          <CCTextField v-model="streamUrl" label="Stream URL" name="streamURL" required />
+          <AudioPlayer v-if="streamUrl" :stream-url="streamUrl" class="mt-4" />
+        </div>
+        <div>
+          <CCFormLabel label="Description" />
+          <Textarea v-model="description" rows="5" cols="30" />
+        </div>
+        <!-- <CCTextField v-model="description" label="Description" name="description" required /> -->
       </div>
-      <div class="flex flex-col gap-2">
-        <label for="image-url">Image URL</label>
-        <InputText id="image-url" v-model="imageUrl" type="text" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="stream-url">Stream URL</label>
-        <InputText id="stream-url" v-model="streamUrl" type="text" />
-      </div>
-      <div v-if="streamUrl" class="flex items-end">
-        <AudioPlayer :stream-url="streamUrl" />
-      </div>
-    </div>
 
-    <div class="flex justify-center mt-8">
-      <Button type="submit">
-        Create Stream
-      </Button>
-    </div>
-  </form>
+      <div class="flex justify-end gap-2 mt-8">
+        <Button label="Cancel" severity="secondary" @click="visible = false" />
+        <Button type="submit" label="Create" />
+      </div>
+    </form>
+  </Dialog>
 </template>
-
-<style>
-
-</style>

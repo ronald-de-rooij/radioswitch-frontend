@@ -1,10 +1,10 @@
 import { defu } from 'defu'
 
-export function useAPI() {
+export function useApiClient() {
   const config = useRuntimeConfig()
   // const { user } = storeToRefs(useUserStore())
 
-  function apiFetch<T>(url: string, options = {}): Promise<T> {
+  function apiClient<T>(url: string, options = {}): Promise<T> {
     const api = $fetch.create({
       baseURL: config.public.BASE_URL as string,
 
@@ -28,11 +28,11 @@ export function useAPI() {
           return navigateTo('/login')
       },
     })
-
     return api(url, options)
   }
 
+
   return {
-    apiFetch,
+    apiClient,
   }
 }
