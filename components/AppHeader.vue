@@ -1,28 +1,3 @@
-<script lang="ts" setup>
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
-
-defineProps<{
-  navigation?: [{
-    name: string
-    href: string
-    current: boolean
-  }]
-}>()
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
-
-const userNavigation = [
-  { name: 'Your Profile', href: '#' },
-  { name: 'Settings', href: '#' },
-  { name: 'Sign out', href: '#' },
-]
-</script>
-
 <template>
   <Disclosure v-slot="{ open }" as="nav" class="border-b border-sky-400 border-opacity-25 bg-surface-ground lg:border-none">
     <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
@@ -109,3 +84,28 @@ const userNavigation = [
     </DisclosurePanel>
   </Disclosure>
 </template>
+
+<script lang="ts" setup>
+import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
+
+defineProps<{
+  navigation?: [{
+    name: string
+    href: string
+    current: boolean
+  }]
+}>()
+const user = {
+  name: 'Tom Cook',
+  email: 'tom@example.com',
+  imageUrl:
+    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+}
+
+const userNavigation = [
+  { name: 'Your Profile', href: '#' },
+  { name: 'Settings', href: '#' },
+  { name: 'Sign out', href: '#' },
+]
+</script>

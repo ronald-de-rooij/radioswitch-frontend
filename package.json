@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev -p 3009",
+    "dev": "nuxt dev",
+    "dev-port": "nuxt dev -p 3009",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -19,7 +20,7 @@
     "defu": "^6.1.4",
     "nuxt": "^3.11.2",
     "primeicons": "^7.0.0",
-    "primevue": "^3.52.0",
+    "primevue": "3.52.0",
     "vue": "^3.4.27",
     "vue-router": "^4.3.2"
   },
@@ -31,6 +32,7 @@
     "@tailwindcss/forms": "^0.5.7",
     "eslint": "^9.3.0",
     "eslint-plugin-format": "^0.1.1",
+    "eslint-plugin-tailwindcss": "^3.17.4",
     "lint-staged": "^15.2.2",
     "nuxt-primevue": "^0.3.1",
     "sass": "^1.77.2",

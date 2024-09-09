@@ -31,7 +31,6 @@ export function useApiClient() {
     return api(url, options)
   }
 
-
   return {
     apiClient,
   }

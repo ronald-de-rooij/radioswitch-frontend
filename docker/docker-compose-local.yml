@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+  nuxt-dev:
+    container_name: radio-switch-nuxt-dev
+    environment:
+      - HOST=0.0.0.0
+    image: node:18-alpine
+    hostname: radio-switch-nuxt
+    ports:
+     - "3000:3000"
+    volumes:
+      - ../:/usr/src/radio-switch-nuxt
+    working_dir: /usr/src/radio-switch-nuxt
+    command: sh -c 'npm install -g pnpm && pnpm install && pnpm dev'
+
+networks:
+  default:
+    external:
+      name: nginx-proxy

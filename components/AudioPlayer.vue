@@ -1,3 +1,26 @@
+<template>
+  <audio
+    ref="audioRef"
+    controls
+    class="w-full"
+    :class="{ hidden: icons }"
+    :src="streamUrl"
+  >
+    Your browser does not support the audio tag.
+  </audio>
+
+  <Button
+    v-if="icons"
+    :icon="audioPlaying ? 'pi pi-pause' : 'pi pi-play'"
+    rounded
+    class="size-12 bg-white text-center text-xl text-sky-500"
+    :pt="{
+      icon: audioPlaying ? '' : 'ml-1',
+    }"
+    @click="toggleAudioPlaying"
+  />
+</template>
+
 <script setup lang="ts">
 const props = defineProps<{
   streamUrl?: string
@@ -37,17 +60,3 @@ function toggleAudioPlaying() {
   audioPlaying.value = !audioPlaying.value
 }
 </script>
-
-<template>
-  <audio ref="audioRef" controls class="w-full" :class="{ hidden: icons }" :src="streamUrl">
-    Your browser does not support the audio tag.
-  </audio>
-
-  <Button
-    v-if="icons"
-    :icon="audioPlaying ? 'pi pi-pause' : 'pi pi-play'" rounded class="size-12 text-center text-xl bg-white text-sky-500" :pt="{
-      icon: audioPlaying ? '' : 'ml-1',
-    }"
-    @click="toggleAudioPlaying"
-  />
-</template>

@@ -1,33 +1,9 @@
-<script lang="ts" setup>
-type InputType = 'text' | 'email' | 'password'
-
-const props = withDefaults(
-  defineProps<{
-    name: string
-    label: string
-    error?: string
-    disabled?: boolean
-    type?: InputType
-    autocomplete?: string
-    required?: boolean
-    autofocus?: boolean
-  }>(),
-  {
-    type: 'text',
-  },
-)
-
-const modelValue = defineModel<string | undefined>()
-const labelWithRequired = computed(() => {
-  if (props.required)
-    return `${props.label} *`
-  return props.label
-})
-</script>
-
 <template>
   <div class="flex w-full flex-col gap-2">
-    <CCFormLabel :label="labelWithRequired" :name="name" />
+    <CCFormLabel
+      :label="labelWithRequired"
+      :name="name"
+    />
     <InputText
       v-if="type === 'text' || type === 'email'"
       :id="name"
@@ -64,3 +40,30 @@ const labelWithRequired = computed(() => {
     <CCFormError :error="error" />
   </div>
 </template>
+
+<script lang="ts" setup>
+type InputType = 'text' | 'email' | 'password'
+
+const props = withDefaults(
+  defineProps<{
+    name: string
+    label: string
+    error?: string
+    disabled?: boolean
+    type?: InputType
+    autocomplete?: string
+    required?: boolean
+    autofocus?: boolean
+  }>(),
+  {
+    type: 'text',
+  },
+)
+
+const modelValue = defineModel<string | undefined>()
+const labelWithRequired = computed(() => {
+  if (props.required)
+    return `${props.label} *`
+  return props.label
+})
+</script>

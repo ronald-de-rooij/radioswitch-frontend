@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  nuxt:
+    container_name: radio-switch-nuxt
+    image: node:18-alpine
+    hostname: radio-switch-nuxt
+    volumes:
+      - ../:/usr/src/radio-switch-nuxt
+    working_dir: /usr/src/radio-switch-nuxt
+    command: sh -c 'npm install -g pnpm && pnpm install && pnpm generate'
+  nuxt-nginx:
+    container_name: radio-switch-nuxt-nginx
+    image: nginx:alpine
+    restart: unless-stopped
+    depends_on:
+      - nuxt
+    environment:
+      VIRTUAL_HOST: ${FRONTEND_HOSTNAME}
+      LETSENCRYPT_HOST: ${FRONTEND_HOSTNAME}
+    expose:
+      - 80
+    volumes:
+      - ../src/dist:/var/www
+      - ./nginx:/etc/nginx/conf.d/
+
+networks:
+  nginx-proxy:
+    external: true

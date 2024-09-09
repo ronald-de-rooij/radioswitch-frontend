@@ -1,3 +1,47 @@
+<template>
+  <form @submit.prevent="updateStream">
+    <div class="grid grid-cols-2 gap-4">
+      <div class="flex flex-col gap-2">
+        <label for="title">Title</label>
+        <InputText
+          id="title"
+          v-model="title"
+          type="text"
+          aria-describedby="stream-title"
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="image-url">Image URL</label>
+        <InputText
+          id="image-url"
+          v-model="imageUrl"
+          type="text"
+        />
+      </div>
+      <div class="flex flex-col gap-2">
+        <label for="stream-url">Stream URL</label>
+        <InputText
+          id="stream-url"
+          v-model="streamUrl"
+          type="text"
+        />
+      </div>
+      <div
+        v-if="streamUrl"
+        class="flex items-end"
+      >
+        <AudioPlayer :stream-url="streamUrl" />
+      </div>
+    </div>
+
+    <div class="mt-8 flex justify-center">
+      <Button type="submit">
+        Update Stream
+      </Button>
+    </div>
+  </form>
+</template>
+
 <script lang="ts" setup>
 import type { Stream } from '~/models'
 
@@ -38,31 +82,3 @@ async function updateStream() {
   }
 }
 </script>
-
-<template>
-  <form @submit.prevent="updateStream">
-    <div class="grid grid-cols-2 gap-4">
-      <div class="flex flex-col gap-2">
-        <label for="title">Title</label>
-        <InputText id="title" v-model="title" type="text" aria-describedby="stream-title" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="image-url">Image URL</label>
-        <InputText id="image-url" v-model="imageUrl" type="text" />
-      </div>
-      <div class="flex flex-col gap-2">
-        <label for="stream-url">Stream URL</label>
-        <InputText id="stream-url" v-model="streamUrl" type="text" />
-      </div>
-      <div v-if="streamUrl" class="flex items-end">
-        <AudioPlayer :stream-url="streamUrl" />
-      </div>
-    </div>
-
-    <div class="flex justify-center mt-8">
-      <Button type="submit">
-        Update Stream
-      </Button>
-    </div>
-  </form>
-</template>

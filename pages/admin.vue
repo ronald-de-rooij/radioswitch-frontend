@@ -1,3 +1,71 @@
+<template>
+  <header class="py-10">
+    <div class="mx-auto flex max-w-7xl justify-between px-4 sm:px-6 lg:px-8">
+      <h1 class="text-3xl font-bold tracking-tight text-white">
+        Streams
+      </h1>
+
+      <Button @click="showCreateDialog = true">
+        Create Stream
+      </Button>
+    </div>
+  </header>
+
+  <CreateStream v-model:visible="showCreateDialog" />
+
+  <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
+    <div class="rounded-lg bg-white px-5 py-6 shadow sm:px-6">
+      <Toast position="top-right" />
+
+      <DataTable
+        :value="streams"
+        table-style="min-width: 50rem"
+      >
+        <Column
+          field="title"
+          header="Title"
+          sortable
+        />
+        <Column
+          field="streamUrl"
+          header="Stream"
+        >
+          <template #body="{ data: { streamUrl } }">
+            <AudioPlayer :stream-url="streamUrl" />
+          </template>
+        </Column>
+        <Column field="action">
+          <template #body="{ data }">
+            <div class="flex-end flex justify-end gap-4">
+              <i
+                class="pi pi-pencil hover:cursor-pointer hover:text-primary-500"
+                @click="editStream(data)"
+              />
+              <i
+                class="pi pi-trash hover:cursor-pointer hover:text-primary-500"
+                @click="deleteStream($event, data)"
+              />
+            </div>
+          </template>
+        </Column>
+      </DataTable>
+
+      <ConfirmPopup />
+
+      <Dialog
+        v-model:visible="dialogVisible"
+        modal
+        header="Edit Stream"
+      >
+        <EditStream
+          :stream="selectedStream"
+          @update="updatedStream"
+        />
+      </Dialog>
+    </div>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import { useToast } from 'primevue/usetoast'
 import type { Stream, StreamResponse } from '~/models'
@@ -64,48 +132,3 @@ async function deleteStream(event: any, stream: Stream): Promise<void> {
   })
 }
 </script>
-
-<template>
-  <header class="py-10">
-    <div class="flex justify-between mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <h1 class="text-3xl font-bold tracking-tight text-white">
-        Streams
-      </h1>
-
-      <Button @click="showCreateDialog = true">
-        Create Stream
-      </Button>
-    </div>
-  </header>
-
-  <CreateStream v-model:visible="showCreateDialog" />
-
-  <div class="mx-auto max-w-7xl px-4 pb-12 sm:px-6 lg:px-8">
-    <div class="rounded-lg bg-white px-5 py-6 shadow sm:px-6">
-      <Toast position="top-right" />
-
-      <DataTable :value="streams" table-style="min-width: 50rem">
-        <Column field="title" header="Title" sortable />
-        <Column field="streamUrl" header="Stream">
-          <template #body="{ data: { streamUrl } }">
-            <AudioPlayer :stream-url="streamUrl" />
-          </template>
-        </Column>
-        <Column field="action">
-          <template #body="{ data }">
-            <div class="flex justify-end flex-end gap-4">
-              <i class="pi pi-pencil hover:text-primary-500 hover:cursor-pointer" @click="editStream(data)" />
-              <i class="pi pi-trash hover:text-primary-500 hover:cursor-pointer" @click="deleteStream($event, data)" />
-            </div>
-          </template>
-        </Column>
-      </DataTable>
-
-      <ConfirmPopup />
-
-      <Dialog v-model:visible="dialogVisible" modal header="Edit Stream">
-        <EditStream :stream="selectedStream" @update="updatedStream" />
-      </Dialog>
-    </div>
-  </div>
-</template>
