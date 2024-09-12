@@ -19,7 +19,7 @@
 
       <DataTable
         :value="streams"
-        table-style="min-width: 50rem"
+        :table-style="{ 'min-width': '50rem' }"
       >
         <Column
           field="title"

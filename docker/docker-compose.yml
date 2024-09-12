@@ -20,7 +20,7 @@ services:
     expose:
       - 80
     volumes:
-      - ../src/dist:/var/www
+      - .output/public:/var/www
       - ./nginx:/etc/nginx/conf.d/
 
 networks:

@@ -27,7 +27,7 @@ From here on all the commands issued should be inputted into the WSL2 container 
 
 ### Non-docker development setup
 
-Go into the src folder and run the following commands:
+Go into the root folder and run the following commands:
 
 - `pnpm install`
 - `pnpm dev`
@@ -70,7 +70,7 @@ Then, execute the following commands:
 Assumptions:
 
 - your current directory contains the repository
-- you have a working `src/.env` file, with a minimum of:
+- you have a working (root) `.env` file, with a minimum of:
   - Database configuration
   - `FRONTEND_HOSTNAME` set to the wanted local URL
 - URL points to local machine in browser. Otherwise add URL to your hosts file (for windows
