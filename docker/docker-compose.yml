@@ -5,7 +5,7 @@ services:
     image: node:18-alpine
     hostname: radio-switch-nuxt
     volumes:
-      - ../:/usr/src/radio-switch-nuxt
+      - ../src:/usr/src/radio-switch-nuxt
     working_dir: /usr/src/radio-switch-nuxt
     command: sh -c 'npm install -g pnpm && pnpm install && pnpm generate'
   nuxt-nginx:
@@ -20,9 +20,11 @@ services:
     expose:
       - 80
     volumes:
-      - .output/public:/var/www
-      - ./nginx:/etc/nginx/conf.d/
+      - ../src/.output/public:/var/www
+      - ./docker-configs/nginx:/etc/nginx/conf.d/
 
 networks:
-  nginx-proxy:
-    external: true
+  default:
+    external:
+      name: nginx-proxy
+
