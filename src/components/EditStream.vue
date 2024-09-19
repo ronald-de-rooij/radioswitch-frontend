@@ -28,7 +28,7 @@
       </div>
       <div
         v-if="streamUrl"
-        class="flex items-end"
+        class="mt-2 flex items-end"
       >
         <AudioPlayer :stream-url="streamUrl" />
       </div>
@@ -70,8 +70,8 @@ async function updateStream() {
       method: 'PUT',
       body: JSON.stringify({
         title: title.value,
-        imageUrl: imageUrl.value,
-        streamUrl: streamUrl.value,
+        image_url: imageUrl.value,
+        stream_url: streamUrl.value,
       }),
     })
 

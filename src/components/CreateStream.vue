@@ -16,7 +16,6 @@
           v-model="imageUrl"
           label="Image URL"
           name="imageURL"
-          required
         />
         <div>
           <CCTextField
@@ -24,11 +23,11 @@
             label="Stream URL"
             name="streamURL"
             required
+            class="mb-4"
           />
           <AudioPlayer
             v-if="streamUrl"
             :stream-url="streamUrl"
-            class="mt-4"
           />
         </div>
         <div>
@@ -37,6 +36,7 @@
             v-model="description"
             rows="5"
             cols="30"
+            class="w-full"
           />
         </div>
         <!-- <CCTextField v-model="description" label="Description" name="description" required /> -->
@@ -59,6 +59,7 @@
 
 <script lang="ts" setup>
 const apiStream = useApiStream()
+const { toastAdd } = useToastPrime()
 
 const visible = defineModel<boolean>('visible', { required: true })
 
@@ -77,12 +78,22 @@ watch(visible, (value) => {
 })
 
 // TODO: Form validation
-function submitForm() {
-  apiStream.createStream({
+async function submitForm() {
+  const response = await apiStream.createStream({
     title: title.value,
-    imageUrl: imageUrl.value,
-    streamUrl: streamUrl.value,
+    image_url: imageUrl.value,
+    stream_url: streamUrl.value,
     description: description.value,
   })
+
+  if (response.error)
+    return
+
+  toastAdd({
+    severity: 'success',
+    summary: 'Stream created',
+    detail: 'The stream has been created successfully',
+  })
+  visible.value = false
 }
 </script>

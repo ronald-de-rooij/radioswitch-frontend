@@ -8,8 +8,8 @@ export interface Stream {
 
 export interface StreamCreate {
   description?: string
-  imageUrl?: string
-  streamUrl: string
+  image_url?: string
+  stream_url: string
   title: string
 }
 

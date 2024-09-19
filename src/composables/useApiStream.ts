@@ -23,7 +23,7 @@ export function useApiStream() {
         body: JSON.stringify(stream),
       })
 
-      if (!response.success)
+      if (!response.success && !response.data)
         throw new Error(response.message)
 
       return {
@@ -55,7 +55,7 @@ export function useApiStream() {
     toastAdd({
       severity: 'error',
       summary: 'Error',
-      detail: 'Something went wrong',
+      detail: `Something went wrong ${error}`,
     })
     return {
       error,
