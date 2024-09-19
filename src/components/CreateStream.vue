@@ -6,7 +6,6 @@
   >
     <form @submit.prevent="submitForm">
       <div class="grid grid-cols-2 gap-4">
-        <!-- TODO: Create Input Component -->
         <CCTextField
           v-model="title"
           label="Title"

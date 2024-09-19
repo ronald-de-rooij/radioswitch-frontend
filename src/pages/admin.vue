@@ -71,6 +71,7 @@ import { useToast } from 'primevue/usetoast'
 import type { Stream, StreamResponse } from '~/models'
 
 const { apiClient } = useApiClient()
+const { convertKeysToCamelCase } = useUtils()
 const apiStream = useApiStream()
 const config = useRuntimeConfig()
 
@@ -90,7 +91,7 @@ const showCreateDialog = ref(false)
 async function getStreams() {
   const response: StreamResponse = await apiClient(`${config.public.BASE_URL}/streams`)
 
-  streams.value = response.data
+  streams.value = convertKeysToCamelCase(response.data)
 }
 
 const dialogVisible = ref(false)

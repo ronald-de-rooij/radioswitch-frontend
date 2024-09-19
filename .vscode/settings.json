@@ -43,6 +43,7 @@
     "toml",
     "astro",
   ],
+  "peacock.remoteColor": "#d73327",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#e05b51",
     "activityBar.background": "#e05b51",
@@ -61,6 +62,5 @@
     "titleBar.activeForeground": "#e7e7e7",
     "titleBar.inactiveBackground": "#d7332799",
     "titleBar.inactiveForeground": "#e7e7e799"
-  },
-  "peacock.remoteColor": "#d73327"
+  }
 }

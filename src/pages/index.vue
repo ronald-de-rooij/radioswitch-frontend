@@ -52,6 +52,7 @@
 import type { Stream, StreamResponse } from '~/models'
 
 const { apiClient } = useApiClient()
+const { convertKeysToCamelCase } = useUtils()
 
 const streams = ref<Stream[]>([])
 
@@ -59,7 +60,7 @@ onMounted(async () => {
   try {
     const { data } = await apiClient<StreamResponse>('/streams')
 
-    streams.value = data
+    streams.value = convertKeysToCamelCase(data)
   }
   catch (error) {
     console.error(error)

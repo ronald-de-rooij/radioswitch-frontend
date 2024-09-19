@@ -1,4 +1,9 @@
 version: "3.7"
+
+networks:
+  nginx-proxy:
+    external: true
+
 services:
   nuxt:
     container_name: radio-switch-nuxt
@@ -7,10 +12,13 @@ services:
     volumes:
       - ../src:/usr/src/radio-switch-nuxt
     working_dir: /usr/src/radio-switch-nuxt
-    command: sh -c 'npm install -g pnpm && pnpm install && pnpm generate'
+    command: sh -c 'npm install && npm generate'
   nuxt-nginx:
     container_name: radio-switch-nuxt-nginx
     image: nginx:alpine
+    networks:
+      - nginx-proxy
+      - default
     restart: unless-stopped
     depends_on:
       - nuxt
@@ -22,9 +30,3 @@ services:
     volumes:
       - ../src/.output/public:/var/www
       - ./docker-configs/nginx:/etc/nginx/conf.d/
-
-networks:
-  default:
-    external:
-      name: nginx-proxy
-
