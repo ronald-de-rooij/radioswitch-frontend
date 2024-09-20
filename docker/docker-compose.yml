@@ -23,8 +23,8 @@ services:
     depends_on:
       - nuxt
     environment:
-      VIRTUAL_HOST: ${FRONTEND_HOSTNAME}
-      LETSENCRYPT_HOST: ${FRONTEND_HOSTNAME}
+      VIRTUAL_HOST: ${FRONTEND_HOSTNAME},www.${FRONTEND_HOSTNAME}
+      LETSENCRYPT_HOST: ${FRONTEND_HOSTNAME},www.${FRONTEND_HOSTNAME}
     expose:
       - 80
     volumes:
