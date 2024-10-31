@@ -6,7 +6,7 @@
       </h1>
 
       <Button @click="showCreateDialog = true">
-        Create Stream
+        Create Stream <i class="pi pi-plus ml-2" />
       </Button>
     </div>
   </header>
@@ -38,11 +38,13 @@
           <template #body="{ data }">
             <div class="flex-end flex justify-end gap-4">
               <i
+                v-tooltip.top="'Edit stream'"
                 class="pi pi-pencil hover:cursor-pointer hover:text-primary-500"
                 @click="editStream(data)"
               />
               <i
-                class="pi pi-trash hover:cursor-pointer hover:text-primary-500"
+                v-tooltip.top="'Delete stream'"
+                class="pi pi-trash hover:cursor-pointer hover:text-red-500"
                 @click="deleteStream($event, data)"
               />
             </div>
@@ -71,7 +73,6 @@ import { useToast } from 'primevue/usetoast'
 import type { Stream, StreamResponse } from '~/models'
 
 const { apiClient } = useApiClient()
-const { convertKeysToCamelCase } = useUtils()
 const apiStream = useApiStream()
 const config = useRuntimeConfig()
 
@@ -91,7 +92,7 @@ const showCreateDialog = ref(false)
 async function getStreams() {
   const response: StreamResponse = await apiClient(`${config.public.BASE_URL}/streams`)
 
-  streams.value = convertKeysToCamelCase(response.data)
+  streams.value = response.data
 }
 
 const dialogVisible = ref(false)

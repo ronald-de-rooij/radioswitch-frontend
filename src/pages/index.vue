@@ -20,6 +20,14 @@
     </div>
 
     <!-- <a href="https://api.radio-switch.nl/auth/google" class="text-white">GOOGLE</a> -->
+    <span
+      class="text-white"
+      @click="windowOpen()"
+    >
+      GOOGLE {{ user?.email }}
+    </span>
+
+    <span class="text-white">{{ user }}</span>
 
     <div class="mx-auto grid max-w-7xl grid-cols-4 gap-4 sm:px-4 lg:px-8">
       <div
@@ -52,7 +60,7 @@
 import type { Stream, StreamResponse } from '~/models'
 
 const { apiClient } = useApiClient()
-const { convertKeysToCamelCase } = useUtils()
+const { user } = storeToRefs(useUserStore())
 
 const streams = ref<Stream[]>([])
 
@@ -60,7 +68,7 @@ onMounted(async () => {
   try {
     const { data } = await apiClient<StreamResponse>('/streams')
 
-    streams.value = convertKeysToCamelCase(data)
+    streams.value = data
   }
   catch (error) {
     console.error(error)
@@ -76,5 +84,16 @@ function isActiveStream(stream: Stream) {
 function randomStation() {
   const randomIndex = Math.floor(Math.random() * streams.value.length)
   activeStream.value = streams.value[randomIndex]
+}
+
+function windowOpen() {
+  window.open('http://api.local.radio-switch.nl/auth/google', 'targetWindow', `toolbar=no,
+                                    location=no,
+                                    status=no,
+                                    menubar=no,
+                                    scrollbars=yes,
+                                    resizable=yes,
+                                    width=SomeSize,
+                                    height=SomeSize`)
 }
 </script>

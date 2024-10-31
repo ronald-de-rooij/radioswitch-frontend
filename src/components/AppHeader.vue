@@ -6,7 +6,7 @@
   >
     <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:px-8">
       <div class="relative flex h-20 items-center justify-between lg:border-b lg:border-sky-400 lg:border-opacity-25">
-        <div class="flex items-center px-2 lg:px-0">
+        <div class="flex w-full items-center px-2 lg:px-0">
           <div class="shrink-0">
             <h1
               class="text-2xl font-bold text-sky-500"
@@ -26,6 +26,65 @@
               >{{ item.name }}</a>
             </div>
           </div>
+          <div class="ml-auto mt-8">
+            <a
+              href="#_"
+              class="group relative inline-flex items-center justify-center overflow-hidden rounded-md p-0.5 font-bold"
+            >
+              <span class="absolute size-full bg-gradient-to-br from-primary via-primary-active-color to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-primary-active-color group-hover:to-primary" />
+              <span class="duration-400 relative rounded-md bg-gray-900 px-6 py-3 transition-all ease-out group-hover:bg-opacity-0">
+                <span class="relative text-white">
+                  <i class="pi pi-google mr-2 text-sm" /> Sign In
+                </span>
+              </span>
+            </a>
+            <GoogleSignInButton v-if="!user" />
+            <div class="flex items-center">
+              <!-- Profile dropdown -->
+              <Menu
+                as="div"
+                class="relative ml-3 shrink-0"
+              >
+                <div>
+                  <MenuButton class="relative flex rounded-full bg-sky-600 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-sky-600">
+                    <span class="absolute -inset-1.5" />
+                    <span class="sr-only">Open user menu</span>
+                    <img
+                      v-if="user.avatar"
+                      class="size-8 rounded-full"
+                      :src="user.avatar"
+                      alt="User avatar"
+                      referrerPolicy="no-referrer"
+                    >
+                  </MenuButton>
+                </div>
+                <transition
+                  enter-active-class="transition ease-out duration-100"
+                  enter-from-class="transform opacity-0 scale-95"
+                  enter-to-class="transform opacity-100 scale-100"
+                  leave-active-class="transition ease-in duration-75"
+                  leave-from-class="transform opacity-100 scale-100"
+                  leave-to-class="transform opacity-0 scale-95"
+                >
+                  <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <MenuItem
+                      v-for="item in userNavigation"
+                      :key="item.name"
+                      v-slot="{ active }"
+                    >
+                      <a
+                        :href="item.href"
+                        class="text-bg-gray-700 block px-4 py-2 text-left text-sm"
+                        :class="[active ? 'bg-gray-100' : '']"
+                      >
+                        {{ item.name }}
+                      </a>
+                    </MenuItem>
+                  </MenuItems>
+                </transition>
+              </Menu>
+            </div>
+          </div>
         </div>
         <!-- Mobile menu button -->
         <div class="flex lg:hidden">
@@ -43,50 +102,6 @@
               aria-hidden="true"
             />
           </DisclosureButton>
-        </div>
-        <!-- lg:ml-4 lg:block" -->
-        <div class="hidden">
-          <div class="flex items-center">
-            <!-- Profile dropdown -->
-            <Menu
-              as="div"
-              class="relative ml-3 shrink-0"
-            >
-              <div>
-                <MenuButton class="relative flex rounded-full bg-sky-600 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-sky-600">
-                  <span class="absolute -inset-1.5" />
-                  <span class="sr-only">Open user menu</span>
-                  <img
-                    class="size-8 rounded-full"
-                    :src="user.imageUrl"
-                    alt=""
-                  >
-                </MenuButton>
-              </div>
-              <transition
-                enter-active-class="transition ease-out duration-100"
-                enter-from-class="transform opacity-0 scale-95"
-                enter-to-class="transform opacity-100 scale-100"
-                leave-active-class="transition ease-in duration-75"
-                leave-from-class="transform opacity-100 scale-100"
-                leave-to-class="transform opacity-0 scale-95"
-              >
-                <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <MenuItem
-                    v-for="item in userNavigation"
-                    :key="item.name"
-                    v-slot="{ active }"
-                  >
-                    <a
-                      :href="item.href"
-                      class="block px-4 py-2 text-sm text-gray-700"
-                      :class="[active ? 'bg-gray-100' : '']"
-                    >{{ item.name }}</a>
-                  </MenuItem>
-                </MenuItems>
-              </transition>
-            </Menu>
-          </div>
         </div>
       </div>
     </div>
@@ -109,8 +124,9 @@
         <div class="flex items-center px-5">
           <div class="shrink-0">
             <img
+              v-if="user.avatar"
               class="size-10 rounded-full"
-              :src="user.imageUrl"
+              :src="user.avatar"
               alt=""
             >
           </div>
@@ -155,18 +171,14 @@ import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuIt
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/vue/24/outline'
 
 defineProps<{
-  navigation?: [{
+  navigation?: {
     name: string
     href: string
     current: boolean
-  }]
+  }[]
 }>()
-const user = {
-  name: 'Tom Cook',
-  email: 'tom@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-}
+
+const { user } = storeToRefs(useUserStore())
 
 const userNavigation = [
   { name: 'Your Profile', href: '#' },

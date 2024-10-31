@@ -1,8 +1,10 @@
 import { defu } from 'defu'
+import { storeToRefs } from 'pinia'
+import { useUserStore } from '@/stores/user'
 
 export function useApiClient() {
   const config = useRuntimeConfig()
-  // const { user } = storeToRefs(useUserStore())
+  const { user } = storeToRefs(useUserStore())
 
   function apiClient<T>(url: string, options = {}): Promise<T> {
     const api = $fetch.create({
@@ -16,8 +18,8 @@ export function useApiClient() {
           } as Record<string, string>,
         }
 
-        // if (user.value?.token)
-        //   defaultOptions.headers.Authorization = `Bearer ${user.value?.token}`
+        if (user.value?.token)
+          defaultOptions.headers.Authorization = `Bearer ${user.value?.token}`
 
         const params = defu(options, defaultOptions)
 

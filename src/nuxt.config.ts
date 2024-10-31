@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   components: [{ path: '~/components', pathPrefix: false }],
-  modules: ['@nuxtjs/google-fonts', '@nuxtjs/tailwindcss', '@vueuse/nuxt', 'nuxt-primevue'],
+  modules: ['@nuxtjs/google-fonts', '@nuxtjs/tailwindcss', '@vueuse/nuxt', 'nuxt-primevue', '@pinia/nuxt'],
   runtimeConfig: {
     public: {
       BASE_URL: process.env.BASE_URL,
