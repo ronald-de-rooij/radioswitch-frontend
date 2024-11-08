@@ -29,7 +29,7 @@
         />
       </svg>
     </div>
-    <span class="text-google-text-gray text-sm tracking-wider">Sign in with Google</span>
+    <span class="text-sm tracking-wider">Sign in with Google</span>
   </button>
 </template>
 

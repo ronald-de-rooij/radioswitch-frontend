@@ -42,7 +42,7 @@ watch(
         audioRef.value?.play()
       }, 1000)
     }
-    console.log(newVal)
+
     if (!newVal) {
       audioRef.value?.pause()
       audioPlaying.value = false

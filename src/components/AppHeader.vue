@@ -8,9 +8,7 @@
       <div class="relative flex h-20 items-center justify-between lg:border-b lg:border-sky-400 lg:border-opacity-25">
         <div class="flex w-full items-center px-2 lg:px-0">
           <div class="shrink-0">
-            <h1
-              class="text-2xl font-bold text-sky-500"
-            >
+            <h1 class="text-2xl font-bold text-sky-500">
               Radio<span class="text-white">Switch</span>
             </h1>
           </div>
@@ -26,18 +24,22 @@
               >{{ item.name }}</a>
             </div>
           </div>
-          <div class="ml-auto mt-8">
-            <a
-              href="#_"
+          <div class="ml-auto">
+            <button
               class="group relative inline-flex items-center justify-center overflow-hidden rounded-md p-0.5 font-bold"
+              @click="signInWithGoogle"
             >
-              <span class="absolute size-full bg-gradient-to-br from-primary via-primary-active-color to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-primary-active-color group-hover:to-primary" />
-              <span class="duration-400 relative rounded-md bg-gray-900 px-6 py-3 transition-all ease-out group-hover:bg-opacity-0">
+              <span
+                class="absolute size-full bg-gradient-to-br from-primary via-primary-active-color to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-primary-active-color group-hover:to-primary"
+              />
+              <span
+                class="duration-400 relative rounded-md bg-gray-900 px-6 py-3 transition-all ease-out group-hover:bg-opacity-0"
+              >
                 <span class="relative text-white">
                   <i class="pi pi-google mr-2 text-sm" /> Sign In
                 </span>
               </span>
-            </a>
+            </button>
             <GoogleSignInButton v-if="!user" />
             <div class="flex items-center">
               <!-- Profile dropdown -->
@@ -46,7 +48,9 @@
                 class="relative ml-3 shrink-0"
               >
                 <div>
-                  <MenuButton class="relative flex rounded-full bg-sky-600 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-sky-600">
+                  <MenuButton
+                    class="relative flex rounded-full bg-sky-600 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-sky-600"
+                  >
                     <span class="absolute -inset-1.5" />
                     <span class="sr-only">Open user menu</span>
                     <img
@@ -66,7 +70,9 @@
                   leave-from-class="transform opacity-100 scale-100"
                   leave-to-class="transform opacity-0 scale-95"
                 >
-                  <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <MenuItems
+                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  >
                     <MenuItem
                       v-for="item in userNavigation"
                       :key="item.name"
@@ -88,7 +94,9 @@
         </div>
         <!-- Mobile menu button -->
         <div class="flex lg:hidden">
-          <DisclosureButton class="relative inline-flex items-center justify-center rounded-md bg-sky-600 p-2 text-sky-200 hover:bg-sky-500 hover:bg-opacity-75 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-sky-600">
+          <DisclosureButton
+            class="relative inline-flex items-center justify-center rounded-md bg-sky-600 p-2 text-sky-200 hover:bg-sky-500 hover:bg-opacity-75 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-sky-600"
+          >
             <span class="absolute -inset-0.5" />
             <span class="sr-only">Open main menu</span>
             <Bars3Icon
@@ -178,7 +186,20 @@ defineProps<{
   }[]
 }>()
 
+const config = useRuntimeConfig()
+
 const { user } = storeToRefs(useUserStore())
+
+function signInWithGoogle() {
+  window.open(`${config.public.BASE_URL}/auth/google`, 'targetWindow', `toolbar=no,
+                                    location=no,
+                                    status=no,
+                                    menubar=no,
+                                    scrollbars=yes,
+                                    resizable=yes,
+                                    width=600px,
+                                    height=800px`)
+}
 
 const userNavigation = [
   { name: 'Your Profile', href: '#' },

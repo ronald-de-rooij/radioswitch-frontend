@@ -12,7 +12,7 @@ services:
     volumes:
       - ../src:/usr/src/radio-switch-nuxt
     working_dir: /usr/src/radio-switch-nuxt
-    command: sh -c 'npm install && npm generate'
+    command: sh -c 'npm install && npm run generate'
   nuxt-nginx:
     container_name: radio-switch-nuxt-nginx
     image: nginx:alpine
