@@ -85,7 +85,7 @@ Assumptions:
 - `cd sites/frontend`
 - `git pull`
 - `cd docker`
-- `sudo docker-compose --env-file ../.env up -d --build`
+- `sudo docker-compose --env-file ../src/.env up -d`
 
 ## Docker configuration
 

@@ -2,7 +2,7 @@
   <div class="h-screen w-full text-center">
     <AppHeader />
 
-    <div class="mx-auto my-8 flex w-96 items-center rounded-full bg-sky-500 p-6">
+    <div class="mx-auto my-8 flex min-h-24 w-96 items-center rounded-full bg-sky-500 p-6 ">
       <AudioPlayer
         v-if="activeStream"
         :stream-url="activeStream?.streamUrl"
@@ -27,8 +27,8 @@
         @click="activeStream = stream"
       >
         <div
-          class="rounded-lg border-2 border-transparent bg-surface-card p-2 px-4 py-5 hover:border-sky-400"
-          :class="{ '!border-sky-400': isActiveStream(stream) }"
+          class="rounded-lg border-2 border-transparent bg-surface-card p-2 px-4 py-5 hover:bg-gradient-to-br hover:from-primary hover:via-primary-active-color hover:to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-primary-active-color group-hover:to-primary"
+          :class="{ 'bg-gradient-to-br from-primary via-primary-active-color to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-primary-active-color group-hover:to-primary': isActiveStream(stream) }"
         >
           <p class="font-bold text-white">
             {{ stream.title }}
