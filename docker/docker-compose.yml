@@ -5,28 +5,19 @@ networks:
     external: true
 
 services:
-  nuxt:
-    container_name: radio-switch-nuxt
-    image: node:18-alpine
-    hostname: radio-switch-nuxt
-    volumes:
-      - ../src:/usr/src/radio-switch-nuxt
-    working_dir: /usr/src/radio-switch-nuxt
-    command: sh -c 'npm install && npm run generate'
   nuxt-nginx:
     container_name: radio-switch-nuxt-nginx
-    image: nginx:alpine
+    build:
+      context: ../src
+      dockerfile: Dockerfile
     networks:
       - nginx-proxy
       - default
     restart: unless-stopped
-    depends_on:
-      - nuxt
     environment:
       VIRTUAL_HOST: ${FRONTEND_HOSTNAME},www.${FRONTEND_HOSTNAME}
       LETSENCRYPT_HOST: ${FRONTEND_HOSTNAME},www.${FRONTEND_HOSTNAME}
     expose:
       - 80
     volumes:
-      - ../src/.output/public:/var/www
       - ./docker-configs/nginx:/etc/nginx/conf.d/

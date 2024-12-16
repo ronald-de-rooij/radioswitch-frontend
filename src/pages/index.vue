@@ -26,14 +26,19 @@
         class="max-w-md cursor-pointer rounded-lg p-0.5"
         @click="activeStream = stream"
       >
-        <div
-          class="rounded-lg border-2 border-transparent bg-surface-card p-2 px-4 py-5 hover:bg-gradient-to-br hover:from-primary hover:via-primary-active-color hover:to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-primary-active-color group-hover:to-primary"
-          :class="{ 'bg-gradient-to-br from-primary via-primary-active-color to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-primary-active-color group-hover:to-primary': isActiveStream(stream) }"
-        >
-          <p class="font-bold text-white">
-            {{ stream.title }}
-          </p>
-        </div>
+        <button class="group relative inline-flex w-full items-center justify-center overflow-hidden rounded-md p-0.5 font-bold">
+          <span
+            class="absolute size-full w-full bg-gradient-to-br from-primary via-primary-active-color to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-primary-active-color group-hover:to-primary"
+          />
+          <span
+            class="duration-400 relative w-full rounded-md bg-gray-900 px-6 py-5 transition-all ease-out group-hover:bg-opacity-0"
+            :class="{ 'bg-gradient-to-br from-primary via-primary-active-color to-[#ff00c6] group-hover:from-[#ff00c6] group-hover:via-primary-active-color group-hover:to-primary': isActiveStream(stream) }"
+          >
+            <span class="relative text-white">
+              {{ stream.title }}
+            </span>
+          </span>
+        </button>
       </div>
     </div>
 
