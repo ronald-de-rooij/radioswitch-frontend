@@ -8,7 +8,10 @@
       <div class="relative flex h-20 items-center justify-between lg:border-b lg:border-sky-400 lg:border-opacity-25">
         <div class="flex w-full items-center px-2 lg:px-0">
           <div class="shrink-0">
-            <h1 class="text-2xl font-bold text-sky-500">
+            <h1
+              class="text-2xl font-bold text-sky-500"
+              @click="router.push('/')"
+            >
               Radio<span class="text-white">Switch</span>
             </h1>
           </div>
@@ -186,12 +189,14 @@ defineProps<{
   }[]
 }>()
 
+const router = useRouter()
+
 const config = useRuntimeConfig()
 
 const { user } = storeToRefs(useUserStore())
 
 function signInWithGoogle() {
-  window.open(`${config.public.BASE_URL}/auth/google`, 'targetWindow', `toolbar=no,
+  window.open(`${config.public.BASE_URL}/auth/google?callback}`, 'targetWindow', `toolbar=no,
                                     location=no,
                                     status=no,
                                     menubar=no,

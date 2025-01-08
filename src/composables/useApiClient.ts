@@ -1,6 +1,6 @@
 import { defu } from 'defu'
 import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '~/stores/user'
 
 export function useApiClient() {
   const config = useRuntimeConfig()

@@ -4,7 +4,7 @@
 
 <script lang="ts" setup>
 import { storeToRefs } from 'pinia'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '~/stores/user'
 
 const { user } = storeToRefs(useUserStore())
 const route = useRoute()
