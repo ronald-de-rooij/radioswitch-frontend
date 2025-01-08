@@ -20,8 +20,6 @@ services:
       - nginx-proxy
       - default
     restart: unless-stopped
-    depends_on:
-      - nuxt
     environment:
       VIRTUAL_HOST: ${FRONTEND_HOSTNAME},www.${FRONTEND_HOSTNAME}
       LETSENCRYPT_HOST: ${FRONTEND_HOSTNAME},www.${FRONTEND_HOSTNAME}
