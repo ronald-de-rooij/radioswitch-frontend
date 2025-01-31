@@ -1,12 +1,11 @@
 import { storeToRefs } from 'pinia'
-import type { UseFetchOptions } from '#app'
-import { useUserStore } from '@/stores/user'
+import { useUserStore } from '../stores/user'
 
 export function useApiClient() {
   const config = useRuntimeConfig()
   const { user } = storeToRefs(useUserStore())
 
-  function apiClient<T>(url: string, options: UseFetchOptions<T> = {}): Promise<T> {
+  function apiClient<T>(url: string, options = {}): Promise<T> {
     const api = $fetch.create({
       baseURL: config.public.BASE_URL as string,
 

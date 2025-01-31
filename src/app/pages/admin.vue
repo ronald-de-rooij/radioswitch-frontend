@@ -36,7 +36,7 @@
         </Column>
         <Column field="action">
           <template #body="{ data }">
-            <div class="flex-end flex justify-end gap-4">
+            <div class="flex justify-end gap-4">
               <i
                 v-tooltip.top="'Edit stream'"
                 class="pi pi-pencil hover:cursor-pointer hover:text-primary-500"
@@ -69,8 +69,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { Stream, StreamResponse } from '~/app/models'
 import { useToast } from 'primevue/usetoast'
-import type { Stream, StreamResponse } from '~/models'
 
 const { apiClient } = useApiClient()
 const apiStream = useApiStream()

@@ -1,4 +1,4 @@
-import type { Stream, StreamCreate } from '~/models'
+import type { Stream, StreamCreate } from '~/app/models'
 
 export function useApiStream() {
   const { apiClient } = useApiClient()

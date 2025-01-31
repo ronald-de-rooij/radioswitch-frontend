@@ -52,7 +52,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Stream, StreamResponse } from '~/models'
+import type { Stream, StreamResponse } from '~/app/models'
 
 const { apiClient } = useApiClient()
 

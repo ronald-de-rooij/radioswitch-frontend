@@ -1,3 +1,7 @@
+/** @type {import("tailwindcss").Config} */
+import tailwindForms from '@tailwindcss/forms'
+import primeui from 'tailwindcss-primeui'
+
 export default {
   darkMode: 'class',
   theme: {
@@ -64,5 +68,6 @@ export default {
     'content/**/*.md',
     'presets/**/*.{js,vue,ts}', // for PrimeVue
   ],
+  plugins: [primeui, tailwindForms],
   safelist: ['p-2', 'text-sm'],
 }

@@ -4,7 +4,7 @@
     "target": "ESNext",
     "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
     "experimentalDecorators": true,
-    "baseUrl": "./app",
+    "baseUrl": "./",
     "module": "ESNext",
     "moduleResolution": "Node",
     "paths": {

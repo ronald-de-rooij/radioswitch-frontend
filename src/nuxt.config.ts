@@ -1,6 +1,6 @@
-import path from 'node:path'
-
 export default defineNuxtConfig({
+  compatibilityDate: '2025-01-08',
+
   future: {
     compatibilityVersion: 4,
   },
@@ -12,7 +12,13 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   components: [{ path: '~/components', pathPrefix: false }],
-  modules: ['@nuxtjs/google-fonts', '@nuxtjs/tailwindcss', '@vueuse/nuxt', 'nuxt-primevue', '@pinia/nuxt'],
+  modules: [
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
+    '@primevue/nuxt-module',
+  ],
 
   runtimeConfig: {
     public: {
@@ -22,13 +28,12 @@ export default defineNuxtConfig({
 
   primevue: {
     options: {
+      theme: 'none',
       ripple: true,
-      unstyled: true,
       ptOptions: {
         mergeProps: true,
       },
     },
-    importPT: { from: path.resolve(__dirname, './presets/lara/') },
   },
 
   css: ['primeicons/primeicons.css'],
@@ -40,5 +45,17 @@ export default defineNuxtConfig({
     viewer: true,
   },
 
-  compatibilityDate: '2025-01-08',
+  imports: {
+    presets: [
+      {
+        from: 'zod',
+        imports: ['z'],
+      },
+      {
+        from: '@primevue/forms/resolvers/zod',
+        imports: ['zodResolver'],
+      },
+    ],
+  },
+
 })

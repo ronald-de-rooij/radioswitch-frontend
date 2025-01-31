@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Stream } from '~/models'
+import type { Stream } from '~/app/models'
 
 const props = defineProps<{
   stream: Stream | null
