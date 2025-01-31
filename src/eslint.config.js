@@ -4,10 +4,13 @@ import tailwind from 'eslint-plugin-tailwindcss'
 export default antfu(
   {
     formatters: true,
+    files: ["app/**/*.{ts,vue}"],
+    ignores: ["app/**/*.config.ts"],
     rules: {
       'n/prefer-global/process': 0,
 
       // Vue
+      'vue/component-name-in-template-casing': ['error', 'PascalCase'],
       'vue/block-order': ['error', {
         order: ['template', 'script', 'style'],
       }],
@@ -19,6 +22,20 @@ export default antfu(
           max: 1,
         },
       }],
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+          ],
+          alphabetize: { order: 'asc' },
+        },
+      ],
     },
   },
   {

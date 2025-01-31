@@ -1,6 +1,14 @@
 import path from 'node:path'
 
 export default defineNuxtConfig({
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  experimental: {
+    appManifest: false,
+  },
+
   devtools: { enabled: true },
   ssr: false,
   components: [{ path: '~/components', pathPrefix: false }],
