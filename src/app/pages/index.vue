@@ -2,14 +2,8 @@
   <div class="h-screen w-full text-center">
     <AppHeader />
 
-    <div class="mx-auto my-8 flex min-h-24 w-96 items-center rounded-full bg-sky-500 p-6 ">
-      <AudioPlayer
-        v-if="activeStream"
-        :stream-url="activeStream?.streamUrl"
-        auto-play
-        icons
-      />
-      <h2 class="w-full text-xl font-bold text-white">
+    <div class="mx-auto flex min-h-40 flex-col items-center justify-center">
+      <h2 class="mb-4 w-full text-4xl font-bold text-white">
         <template v-if="activeStream">
           {{ activeStream.title }}
         </template>
@@ -17,6 +11,13 @@
           Select a stream to start listening
         </template>
       </h2>
+
+      <AudioPlayer
+        v-if="activeStream"
+        :stream-url="activeStream?.streamUrl"
+        auto-play
+        icons
+      />
     </div>
 
     <div class="mx-auto grid max-w-7xl grid-cols-4 gap-4 sm:px-4 lg:px-8">

@@ -9,16 +9,24 @@
     Your browser does not support the audio tag.
   </audio>
 
-  <Button
-    v-if="icons"
-    :icon="audioPlaying ? 'pi pi-pause' : 'pi pi-play'"
-    rounded
-    class="size-12 bg-white text-center text-xl text-sky-500"
-    :pt="{
-      icon: audioPlaying ? '' : 'ml-1',
-    }"
-    @click="toggleAudioPlaying"
-  />
+  <div class="flex items-center justify-center">
+    <Button
+      v-if="icons"
+      :icon="audioPlaying ? 'pi pi-pause' : 'pi pi-play'"
+      rounded
+      class="!size-10 bg-white text-center text-xl text-sky-500 hover:bg-sky-700 hover:text-white"
+      :pt="{
+        icon: audioPlaying ? '' : 'ml-1',
+      }"
+      @click="toggleAudioPlaying"
+    />
+
+    <Slider
+      v-model="volume"
+      class="ml-4 w-32"
+      @change="updateVolume"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -29,8 +37,9 @@ const props = defineProps<{
 }>()
 
 const audioPlaying = ref(false)
-
 const audioRef = ref<HTMLAudioElement | null>(null)
+const volume = ref(100)
+
 watch(
   () => props.streamUrl,
   (newVal) => {
@@ -52,11 +61,19 @@ watch(
 )
 
 function toggleAudioPlaying() {
-  if (audioPlaying.value)
+  if (audioPlaying.value) {
     audioRef.value?.pause()
-  else
+    audioPlaying.value = false
+  }
+  else {
     audioRef.value?.play()
+    audioPlaying.value = true
+  }
+}
 
-  audioPlaying.value = !audioPlaying.value
+function updateVolume() {
+  if (audioRef.value) {
+    audioRef.value.volume = volume.value / 100
+  }
 }
 </script>

@@ -36,12 +36,16 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['primeicons/primeicons.css'],
+  css: [
+    '~/assets/styles/tailwind.css',
+    '~/assets/styles/base.css',
+    'primeicons/primeicons.css',
+  ],
 
   tailwindcss: {
-    exposeConfig: false,
-    cssPath: ['~/assets/tailwind.scss', { injectPosition: 0 }],
+    cssPath: ['~/assets/tailwind.css', { injectPosition: 0 }],
     configPath: 'tailwind.config',
+    exposeConfig: false,
     viewer: true,
   },
 
@@ -57,5 +61,4 @@ export default defineNuxtConfig({
       },
     ],
   },
-
 })
