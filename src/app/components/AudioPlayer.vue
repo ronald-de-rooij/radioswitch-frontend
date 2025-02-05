@@ -10,22 +10,25 @@
   </audio>
 
   <div class="flex items-center justify-center">
-    <Button
+    <template
       v-if="icons"
-      :icon="audioPlaying ? 'pi pi-pause' : 'pi pi-play'"
-      rounded
-      class="!size-10 bg-white text-center text-xl text-sky-500 hover:bg-sky-700 hover:text-white"
-      :pt="{
-        icon: audioPlaying ? '' : 'ml-1',
-      }"
-      @click="toggleAudioPlaying"
-    />
+    >
+      <Button
+        :icon="audioPlaying ? 'pi pi-pause' : 'pi pi-play'"
+        rounded
+        class="!size-10 bg-white text-center text-xl text-sky-500 hover:bg-sky-700 hover:text-white"
+        :pt="{
+          icon: audioPlaying ? '' : 'ml-1',
+        }"
+        @click="toggleAudioPlaying"
+      />
 
-    <Slider
-      v-model="volume"
-      class="ml-4 w-32"
-      @change="updateVolume"
-    />
+      <Slider
+        v-model="volume"
+        class="ml-4 w-32"
+        @change="updateVolume"
+      />
+    </template>
   </div>
 </template>
 

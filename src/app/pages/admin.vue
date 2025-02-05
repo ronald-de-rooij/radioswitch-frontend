@@ -70,7 +70,6 @@
 
 <script lang="ts" setup>
 import type { Stream, StreamResponse } from '~/app/models'
-import { useToast } from 'primevue/usetoast'
 
 const { apiClient } = useApiClient()
 const apiStream = useApiStream()
