@@ -1,10 +1,24 @@
-import path from 'node:path'
-
 export default defineNuxtConfig({
+  compatibilityDate: '2025-01-08',
+
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  experimental: {
+    appManifest: false,
+  },
+
   devtools: { enabled: true },
   ssr: false,
   components: [{ path: '~/components', pathPrefix: false }],
-  modules: ['@nuxtjs/google-fonts', '@nuxtjs/tailwindcss', '@vueuse/nuxt', 'nuxt-primevue', '@pinia/nuxt'],
+  modules: [
+    '@nuxtjs/google-fonts',
+    '@nuxtjs/tailwindcss',
+    '@pinia/nuxt',
+    '@vueuse/nuxt',
+    '@primevue/nuxt-module',
+  ],
 
   runtimeConfig: {
     public: {
@@ -14,23 +28,37 @@ export default defineNuxtConfig({
 
   primevue: {
     options: {
+      theme: 'none',
       ripple: true,
-      unstyled: true,
       ptOptions: {
         mergeProps: true,
       },
     },
-    importPT: { from: path.resolve(__dirname, './presets/lara/') },
   },
 
-  css: ['primeicons/primeicons.css'],
+  css: [
+    '~/assets/styles/tailwind.css',
+    '~/assets/styles/base.css',
+    'primeicons/primeicons.css',
+  ],
 
   tailwindcss: {
-    exposeConfig: false,
-    cssPath: ['~/assets/tailwind.scss', { injectPosition: 0 }],
+    cssPath: ['~/assets/tailwind.css', { injectPosition: 0 }],
     configPath: 'tailwind.config',
+    exposeConfig: false,
     viewer: true,
   },
 
-  compatibilityDate: '2025-01-08',
+  imports: {
+    presets: [
+      {
+        from: 'zod',
+        imports: ['z'],
+      },
+      {
+        from: '@primevue/forms/resolvers/zod',
+        imports: ['zodResolver'],
+      },
+    ],
+  },
 })

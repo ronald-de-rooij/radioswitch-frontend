@@ -1,5 +1,9 @@
+/** @type {import("tailwindcss").Config} */
+import tailwindForms from '@tailwindcss/forms'
+import primeui from 'tailwindcss-primeui'
+
 export default {
-  darkMode: 'class',
+  darkMode: 'selector',
   theme: {
     extend: {
       colors: {
@@ -52,17 +56,13 @@ export default {
     },
   },
   content: [
-    'components/**/*.{vue,js,ts}',
-    'layouts/**/*.vue',
-    'pages/**/*.vue',
-    'composables/**/*.{js,ts}',
-    'plugins/**/*.{js,ts}',
-    'App.{js,ts,vue}',
-    'app.{js,ts,vue}',
-    'Error.{js,ts,vue}',
-    'error.{js,ts,vue}',
-    'content/**/*.md',
-    'presets/**/*.{js,vue,ts}', // for PrimeVue
+    './app/components/**/*.{js,vue,ts}',
+    './app/layouts/**/*.vue',
+    './app/pages/**/*.vue',
+    './app/plugins/**/*.{js,ts}',
+    './nuxt.config.{js,ts}',
+    './app/app.vue',
+    './app/error.vue',
   ],
-  safelist: ['p-2', 'text-sm'],
+  plugins: [primeui, tailwindForms],
 }

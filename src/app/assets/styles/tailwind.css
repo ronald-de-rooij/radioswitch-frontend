@@ -1,0 +1,19 @@
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "./primevue/tailwind.css";
+@import "tailwindcss/utilities";
+
+html,
+body,
+#__nuxt {
+  height: 100%;
+  background-color: #121826;
+}
+
+
+@layer utilities {
+  .animate-duration-450 {
+    animation-duration: 450ms;
+  }
+}
